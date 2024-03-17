@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm RAHUL VERMA</h1>
-<h3 align="center">Aspiring Full Stack Developer and certified in Machine Learning & Deep Learning. Eager to contribute innovative solutions. Current student, graduating in 2024, with a strong foundation and enthusiasm for creating impactful technologies in the tech industry.</h3>
+<h3 align="center">Aspiring Full Stack Developer and certified in Machine Learning , Deep Learning, Unsupervised learning & Supervised learning . Eager to contribute innovative solutions. Current student, graduating in 2024, with a strong foundation and enthusiasm for creating impactful technologies in the tech industry.</h3>
 
 - 🌱 I’m currently learning **Frameworks, JS , DSA**
 
