@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm RAHUL VERMA</h1>
-<h3 align="center"> Full Stack Developer and certified in Web Devlopment and  Machine Learning , Deep Learning, Unsupervised learning & Supervised learning . Eager to contribute innovative solutions.Graduated in 2024, with a strong foundation and enthusiasm for creating impactful technologies in the tech industry.</h3>
+<h3 align="center"> “Full-Stack Developer, certified in Web Development and Machine Learning (Deep Learning, Supervised & Unsupervised Learning). Graduated in 2024 with a strong foundation in technology and a passion for building impactful, innovative solutions.</h3>
 
 - 🌱 I’m currently learning **Frameworks, JS , DSA**
 
