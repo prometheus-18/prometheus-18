@@ -1,15 +1,82 @@
-<h1 align="center">Hi 👋, I'm RAHUL VERMA</h1>
-<h3 align="center"> “Full-Stack Developer, certified in Web Development and Machine Learning (Deep Learning, Supervised & Unsupervised Learning). Graduated in 2024 with a strong foundation in technology and a passion for building impactful, innovative solutions.</h3>
+#!/usr/bin/env node
+/**
+ * Regenerates the auto-updated "Latest Repositories" block in README.md.
+ * Pulls live repos from the GitHub API, skips forks and the profile repo,
+ * and writes a table between the AUTO-GENERATED markers.
+ *
+ * Runs in GitHub Actions with GITHUB_TOKEN provided automatically.
+ */
 
-- 🌱 I’m currently learning **Frameworks, JS , DSA**
+const fs = require("fs");
 
-- 📫 How to reach me **mrrahulverma18@gmail.com**
+const USER = "prometheus-18";
+const README = "README.md";
+const START = "<!-- AUTO-GENERATED:START -->";
+const END = "<!-- AUTO-GENERATED:END -->";
+const MAX_REPOS = 8; // how many recently-pushed repos to show
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-</p>
+async function main() {
+  const res = await fetch(
+    `https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed&type=owner`,
+    {
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "readme-updater",
+        ...(process.env.GITHUB_TOKEN
+          ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+          : {}),
+      },
+    }
+  );
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> <a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="php" width="40" height="40"/> </a> <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> </p>
+  if (!res.ok) {
+    throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+  }
 
-<p><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=prometheus-18&show_icons=true&locale=en&layout=compact" alt="prometheus-18" /></p>
+  const repos = await res.json();
+
+  const visible = repos
+    .filter((r) => !r.fork && !r.archived && r.name !== USER)
+    .slice(0, MAX_REPOS);
+
+  const rows = visible
+    .map((r) => {
+      const desc = (r.description || "—").replace(/\|/g, "\\|");
+      const lang = r.language || "—";
+      const updated = new Date(r.pushed_at).toISOString().slice(0, 10);
+      return `| [${r.name}](${r.html_url}) | ${desc} | ${lang} | ${updated} |`;
+    })
+    .join("\n");
+
+  const block = [
+    "### 🔄 Latest Repositories",
+    "",
+    "_Auto-updated from GitHub on every push._",
+    "",
+    "| Repo | Description | Language | Last push |",
+    "| --- | --- | --- | --- |",
+    rows,
+  ].join("\n");
+
+  let readme = fs.readFileSync(README, "utf8");
+  const pattern = new RegExp(`${START}[\\s\\S]*?${END}`);
+  const replacement = `${START}\n${block}\n${END}`;
+
+  if (!pattern.test(readme)) {
+    throw new Error("AUTO-GENERATED markers not found in README.md");
+  }
+
+  const updated = readme.replace(pattern, replacement);
+
+  if (updated !== readme) {
+    fs.writeFileSync(README, updated);
+    console.log(`Updated README with ${visible.length} repos.`);
+  } else {
+    console.log("No changes needed.");
+  }
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
