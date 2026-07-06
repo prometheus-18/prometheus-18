@@ -174,6 +174,11 @@ Outside work, I enjoy building products from scratch — from analytics tools an
 
 ---
 
+<!-- AUTO-GENERATED:START -->
+<!-- AUTO-GENERATED:END -->
+
+---
+
 ### 📚 Areas I'm Exploring
 
 - Experimentation Platforms
