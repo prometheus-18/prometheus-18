@@ -181,7 +181,7 @@ _Auto-updated from GitHub on every push._
 
 | Repo | Description | Language | Last push |
 | --- | --- | --- | --- |
-| [Apply-copilot](https://github.com/prometheus-18/Apply-copilot) | Free resume co-pilot - honest ATS score, AI-sharpened bullets, and a custom one-page resume + cover letter as a real PDF. Sign in once, synced everywhere. | HTML | 2026-08-01 |
+| [Apply-copilot](https://github.com/prometheus-18/Apply-copilot) | Free resume co-pilot - honest ATS score, AI-sharpened bullets, and a custom one-page resume + cover letter as a real PDF. Sign in once, synced everywhere. | HTML | 2026-08-03 |
 | [RFM_ANALYSIS](https://github.com/prometheus-18/RFM_ANALYSIS) | — | Jupyter Notebook | 2026-07-25 |
 | [Wayfarer](https://github.com/prometheus-18/Wayfarer) | Wayfarer" — an offline AI travel companion that works in full airplane mode, built as Expo (prebuild) + React Native + TypeScript + @qvac/sdk for Android, from your Windows machine.  Three hero flows, each chaining QVAC modules | TypeScript | 2026-06-20 |
 | [JOB_TRACKER_PRO](https://github.com/prometheus-18/JOB_TRACKER_PRO) | — | — | 2026-03-07 |
